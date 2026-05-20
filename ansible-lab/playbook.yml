@@ -1,0 +1,31 @@
+- name: Ansible Lab 12 Automation
+  hosts: local
+  become: yes
+
+  tasks:
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Create a new user
+      user:
+        name: labuser
+        state: present
+        create_home: yes
+
+    - name: Create configuration file
+      copy:
+        dest: /etc/lab_config.txt
+        content: "Ansible configuration deployed successfully"
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
